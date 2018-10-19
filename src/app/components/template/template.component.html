@@ -1,0 +1,84 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form (ngSubmit)="guardar(forma)" #forma="ngForm">
+    <p class="valid" [ngClass]="{'invalido': forma.status == 'INVALID'}"> {{ forma.status}}</p>
+    <div class="form-group row" [ngClass]="{'invalido': (nombre.errors?.required || nombre.errors?.minlength) && nombre.touched }">
+        <label class="col-2 col-form-label">Nombre</label>
+        <div class="col-8">
+
+            <input #nombre="ngModel" class="form-control" type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" required minlength="5">
+            <div class="invalido" *ngIf="nombre.errors?.required && nombre.touched">
+                Este campo es requerido.
+            </div>
+            <div class="invalido" *ngIf="nombre.errors?.minlength && nombre.touched">
+                Por lo menos {{ nombre.errors?.minlength.requiredLength }} caracteres.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row" [ngClass]="{'invalido': (apellido.errors?.required || apellido.errors?.minlength) && apellido.touched }">
+        <label class="col-2 col-form-label">Apellido</label>
+        <div class="col-8">
+
+            <input #apellido="ngModel" class="form-control" type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" required minlength="5">
+            <div class="invalido" *ngIf="apellido.errors?.required && apellido.touched">
+                Este campo es requerido.
+            </div>
+            <div class="invalido" *ngIf="apellido.errors?.minlength">
+                Por lo menos {{ apellido.errors?.minlength.requiredLength }} caracteres.
+            </div>
+        </div>
+    </div>
+    <div class="form-group row" [ngClass]="{'invalido': (email.errors?.required || email.errors?.pattern) && email.touched }">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+
+            <input #email=ngModel class="form-control" type="email" placeholder="Correo electrónico" name="email" [(ngModel)]="usuario.correo" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <div class="invalido" *ngIf="email.errors?.required && email.touched">
+                Este campo es requerido.
+            </div>
+            <div class="invalido" *ngIf="email.errors?.pattern">
+                El campo no tiene formato de correo.
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pais</label>
+        <div class="col-md-8">
+            <select #pais=ngModel [(ngModel)]="usuario.pais" name="pais" class="form-control" required>
+            <option value="">Seleccione un país</option>
+            <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
+          </select>
+            <div class="invalido" *ngIf="pais.value == '' && pais.touched">
+                Este campo es requerido. Seleccione un país
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Género</label>
+        <div class="col-md-8">
+            <label *ngFor="let g of generos"><input class="m-1" [(ngModel)]="usuario.genero" name="genero" type="radio" [value]="g">
+            <span>{{g}}</span></label>
+            <!-- <input class="m-1" [(ngModel)]="usuario.genero" name="genero" type="radio" value="Mujer"> <span>Mujer</span> -->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Condiciones</label>
+        <div class="col-md-8">
+            <label><input [(ngModel)]="usuario.acepta" name="acepta" class="m-1" type="checkbox" required>
+          <span>Acepto las condiciones</span></label>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+            <button [disabled]="forma.status == 'INVALID' " type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+        </div>
+    </div>
+
+</form>
+
+<pre>{{usuario | json}}</pre>

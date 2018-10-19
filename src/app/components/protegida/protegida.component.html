@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-4">
+        <img [src]=" profile.picture" class="img-fluid rounded-circle">
+    </div>
+    <div class="col-md-8">
+        <ul class="justify-content-end">
+            <li class="list-group-item"> Nombre: {{ profile.name }}
+            </li>
+            <li class="list-group-item"> Idioma: {{ profile.locale }}
+            </li>
+            <li class="list-group-item"> Fecha de actualización: {{ profile.updated_at | date: 'dd MM yyyy'}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<pre>{{profile | json}}</pre>
